@@ -22,6 +22,8 @@
 #
 # Changelog:
 #
+# * v1.4 (2004-09-15): fixed trivial bug with help (-h) not being shown
+#
 # * v1.3 (2004-09-12): qtvimsyntax renamed to multiAPIsyntax; support for KDE, GTK1, GTK2, wxWidgets added
 #
 # * v1.2 (2003-12-06): fixed regexp to catch missed classes; added highlighting for 
@@ -130,11 +132,6 @@ $res = GetOptions("wx"   => \$wantWx,
 		  "help" => \$help
 	  );
 
-if ( $syntaxFile eq '' and $listFile eq '' )#{{{
-{
-	print STDERR "No output files specified\n";
-	exit 1;
-}#}}}
 if ( $help )#{{{
 {
 	print << '_ENDHELP';
@@ -154,6 +151,12 @@ Options:
 _ENDHELP
 	exit 0;
 }#}}}
+if ( $syntaxFile eq '' and $listFile eq '' )#{{{
+{
+	print STDERR "No output files specified. See -h for usage.\n";
+	exit 1;
+}#}}}
+
 if ( $wantGTK1 )#{{{
 {
 	@words = (@words, ripGTK1());
